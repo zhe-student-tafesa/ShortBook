@@ -6,6 +6,11 @@ import  { connect } from 'react-redux';
 
 import { CSSTransition } from 'react-transition-group';
 
+//导入 所有 内容
+//import  * as actionCreators  from './store/actionCreators';
+import    { actionCreators }  from './store/index.js';
+
+
 import { HeaderWrapper,
          Logo,
          Nav,
@@ -122,9 +127,9 @@ const Header= (props)=> {//变成 无状态 组件
 
 // }
 
-const mapStateToProps=(state)=>{
+const mapStateToProps=(state)=>{//由于 拆分 reducer，导致多了一层header.
     return {
-        focused : state.focused//把tate.focused 映射 到Props的 focused上
+        focused : state.header.focused//把tate.focused 映射 到Props的 focused上
 
     };
 };
@@ -133,16 +138,12 @@ const mapDispatchToProps=(dispatch)=>{
     return {
         handleInputFocus(){
             //console.log('aaa');
-            const action={
-                type: 'input_focus'
-            }
+            const action= actionCreators.searchFocus();
             dispatch(action);
         },
 
         handleInputBlur(){//input_blur
-            const action={
-                type: 'input_blur'
-            }
+            const action= actionCreators.searchBlur();
             dispatch(action);
         }
         
