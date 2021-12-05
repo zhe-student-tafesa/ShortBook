@@ -135,7 +135,7 @@ export const SearchWrapper = styled.div`
      //    width:160px;  
      // }
      position:relative;
-     .iconfont{
+     .zoom {
         position: absolute;
         right: 5px;
         bottom:5px;
@@ -149,4 +149,67 @@ export const SearchWrapper = styled.div`
             color : #fff;
         }
      }
+`;
+
+//创建一个组件 SearchInfo 本质上这里是一个div
+export const SearchInfo = styled.div`
+    // 
+    position:absolute;
+    left: 0;
+    top: 56px;
+    width: 240px;
+    padding: 0 20px;
+    //background: green;
+    //height: 100px;
+    //border-bottom: 1px solid #f0f0f0;//下 边框
+    box-shadow: 0 0 8px rgb(0, 0, 0, .2);
+`;
+
+//SearchInfoTitle
+export const SearchInfoTitle = styled.div`
+    // 
+    margin-top: 20px;
+    margin-bottom: 15px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #969696;
+`;
+
+//SearchInfoSwitch
+export const SearchInfoSwitch = styled.span`
+    float: right;
+    font-size: 13px;
+    cursor : pointer;// 鼠标 放上时 ，鼠标 变成 手型
+    .spin{
+        font-size: 12px;
+        margin-right: 2px;
+        display : block;
+        float: left;
+        transition: all .2s ease-in;//11具备  transition 特性
+        //transform: rotate(0deg);
+        transform-origin: center center;
+    }
+`;
+// SearchInfoList 
+export const SearchInfoList = styled.div`
+    // 触发 BFC
+    overflow: hidden;
+
+`;
+
+//SearchInfoItem
+export const SearchInfoItem = styled.a`
+    display: block;// 为了 设置 a的宽高。必须  block
+    float: left;
+    line-height: 20px;
+    margin-right: 10px;
+    margin-top: 7px;
+    margin-bottom: 8px;
+    padding: 0 5px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    color: #787878;
+    
+    border-radius: 3px;
+
 `;

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { Component } from 'react';
 
 import  { connect } from 'react-redux';
 //import  { GlobalStyleIcon } from '../../statics/iconfont/iconfont.js';   //导入GlobalStyleIcon <GlobalStyleIcon/>
@@ -18,99 +18,98 @@ import { HeaderWrapper,
          NavSearch,
          Addition,
          Button,
-         SearchWrapper
+         SearchWrapper,
+         SearchInfo,
+         SearchInfoTitle,
+         SearchInfoSwitch,
+         SearchInfoList,
+         SearchInfoItem
        }  from './style.js';
 
-const Header= (props)=> {//变成 无状态 组件
-    return (
-        <HeaderWrapper>
-            <Logo href='/' />
-            <Nav>
-                
-                <NavItem className='left active'>首页</NavItem>
-                <NavItem className='left'>下载App</NavItem>
-                <NavItem className='right'>登录</NavItem>
-                <NavItem className='right'>
-                    <span className="iconfont">&#xe636;</span>
-                </NavItem>
-                <SearchWrapper>
-                    <CSSTransition
-                        timeout={200}
-                        in={props.focused}
-                        classNames='slide'
-                    >
-                        <NavSearch
-                            className={ props.focused? 'focused' : ''}
-                            onFocus={ props.handleInputFocus}
-                            onBlur={ props.handleInputBlur}
-                        />
-                    </CSSTransition>
-                    <span className={ props.focused? 'focused iconfont' : 'iconfont'} >&#xe637;</span>
-                </SearchWrapper>
-            </Nav>
-            <Addition> 
-                <Button className='writting'>
-                    <span className="iconfont">&#xe708;</span>
-                    写文章
-                </Button>
-                <Button className='reg'>注册</Button>
-            </Addition>
-        </HeaderWrapper>
-    );
+
+
+class Header extends Component{
+    
+              // AJAX的数据项 不能 重复
+    getListArea(show){// 定义一个方法，1.决定是否 显示 搜索框， 2.显示 AJAX的数据
+        const {page , mouseIn , totalPage, handleChangePage } = this.props;
+        const newList= this.props.list.toJS();// 转为普通js对象
+        const pageList= [];
+        if(newList.length){//防止 初始化 时走 for 循环，此时newList 为空，newList[i]为 undefine
+            for(let i= (page-1)*10 ; i<(page-0)*10; i++){
+                pageList.push(<SearchInfoItem key= { newList[i] }>{ newList[i] }</SearchInfoItem>)
+            }
+        }
+
+        if(show || mouseIn){
+            return (
+                <SearchInfo onMouseEnter= {this.props.handleMouseEnter}
+                            onMouseLeave= {this.props.handleMouseLeave}
+                >
+                    <SearchInfoTitle>
+                        热门搜索
+                        <SearchInfoSwitch onClick= {()=> handleChangePage(page, totalPage, this.spinIcon)}>
+                            <span ref={(icon) => {this.spinIcon = icon}}  className="iconfont spin">&#xe851;</span>
+                            换一批
+                        </SearchInfoSwitch>
+                        <SearchInfoList>
+                            {
+                                pageList
+                            }
+                        </SearchInfoList>
+                    </SearchInfoTitle>
+                </SearchInfo>
+            );
+        }else{
+            return null;
+        }
+    }
+
+    render(){
+        //list
+        const { list } = this.props;
+        return(
+            <HeaderWrapper>
+                <Logo href='/' />
+                <Nav>
+                    
+                    <NavItem className='left active'>首页</NavItem>
+                    <NavItem className='left'>下载App</NavItem>
+                    <NavItem className='right'>登录</NavItem>
+                    <NavItem className='right'>
+                        <span className="iconfont">&#xe636;</span>
+                    </NavItem>
+                    <SearchWrapper>
+                        <CSSTransition
+                            timeout={200}
+                            in={this.props.focused}
+                            classNames='slide'
+                        >
+                            <NavSearch
+                                className={ this.props.focused? 'focused' : ''}
+                                onFocus={  ()=> {this.props.handleInputFocus(list)} }
+                                onBlur={ this.props.handleInputBlur}
+                            />
+                        </CSSTransition>
+                        <span className={ this.props.focused? 'focused iconfont zoom' : 'iconfont zoom'} >&#xe637;</span>
+                        {this.getListArea(this.props.focused)}
+                    </SearchWrapper>
+                </Nav>
+                <Addition> 
+                    <Button className='writting'>
+                        <span className="iconfont">&#xe708;</span>
+                        写文章
+                    </Button>
+                    <Button className='reg'>注册</Button>
+                </Addition>
+            </HeaderWrapper>
+
+
+        );
+
+    }
 }
 
-
-
-
-
-
-
-// class Header extends Component{
-//     // constructor(props){
-//     //     super(props);
-//     //     // this.state={
-            
-//     //     // };
-//     //     this.handleInputFocus=this.handleInputFocus.bind(this);
-//     //     this.handleInputBlur= this.handleInputBlur.bind(this);
-//     // }
-//     render(){
-//         return(
-//             <HeaderWrapper>
-//                 <Logo href='/' />
-//                 <Nav>
-                    
-//                     <NavItem className='left active'>首页</NavItem>
-//                     <NavItem className='left'>下载App</NavItem>
-//                     <NavItem className='right'>登录</NavItem>
-//                     <NavItem className='right'>
-//                         <span className="iconfont">&#xe636;</span>
-//                     </NavItem>
-//                     <SearchWrapper>
-//                         <CSSTransition
-//                             timeout={200}
-//                             in={this.props.focused}
-//                             classNames='slide'
-//                         >
-//                             <NavSearch
-//                                 className={this.props.focused? 'focused' : ''}
-//                                 onFocus={this.props.handleInputFocus}
-//                                 onBlur={this.props.handleInputBlur}
-//                             />
-//                         </CSSTransition>
-//                         <span className={this.props.focused? 'focused iconfont' : 'iconfont'} >&#xe637;</span>
-//                     </SearchWrapper>
-//                 </Nav>
-//                 <Addition> 
-//                     <Button className='writting'>
-//                         <span className="iconfont">&#xe708;</span>
-//                         写文章
-//                     </Button>
-//                     <Button className='reg'>注册</Button>
-//                 </Addition>
-//             </HeaderWrapper>
-//         );
-//     }
 //     // handleInputFocus(){
 //     //     //console.log("haha");
 //     //     this.setState({
@@ -128,23 +127,63 @@ const Header= (props)=> {//变成 无状态 组件
 // }
 
 const mapStateToProps=(state)=>{//由于 拆分 reducer，导致多了一层header.
-    return {
-        focused : state.header.focused//把tate.focused 映射 到Props的 focused上
-
+    return {//因为immutable，所有修改: get('focused')
+        focused : state.get('header').get('focused'),//把tate.focused 映射 到Props的 focused上
+        list : state.get('header').get('list'),
+        page : state.get('header').get('page'),//获取 页码
+        totalPage : state.get('header').get('totalPage'),//获取 总页码
+        mouseIn : state.get('header').get('mouseIn')
     };
 };
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        handleInputFocus(){
+        handleInputFocus( list ){
             //console.log('aaa');
+            if(list.size=== 0){
+                //AJAX
+                const action2= actionCreators.getList();// //使用 thunk action可以 返回 一个 函数
+                dispatch(action2);
+
+            }
             const action= actionCreators.searchFocus();
             dispatch(action);
+
         },
 
         handleInputBlur(){//input_blur
             const action= actionCreators.searchBlur();
             dispatch(action);
+        },
+        handleMouseEnter(){
+           const action= actionCreators.mouseEnter();
+           dispatch(action); 
+        },
+        
+        handleMouseLeave(){
+           const action= actionCreators.mouseLeave();
+           dispatch(action); 
+        },
+        handleChangePage(page, totalPage, spin){
+            //console.log(spin);
+            let originalDeg= spin.style.transform.replace(/[^0-9]/ig,'');
+            if(originalDeg){
+                originalDeg=parseInt(originalDeg,10);
+            }else{//第一次0
+                originalDeg= 0;
+            }
+
+            originalDeg= originalDeg+360;
+            spin.style.transform = 'rotate(' + originalDeg + 'deg)';
+
+            if( page< totalPage ){
+                const action= actionCreators.changePage(page+1);
+                dispatch(action); 
+            }else{
+                const action= actionCreators.changePage( 1 );
+                dispatch(action);    
+            }
+
         }
         
     };
