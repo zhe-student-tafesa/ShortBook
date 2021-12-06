@@ -163,6 +163,7 @@ export const SearchInfo = styled.div`
     //height: 100px;
     //border-bottom: 1px solid #f0f0f0;//下 边框
     box-shadow: 0 0 8px rgb(0, 0, 0, .2);
+    background: #fff; // 白色
 `;
 
 //SearchInfoTitle
