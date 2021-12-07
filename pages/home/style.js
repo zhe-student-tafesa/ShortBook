@@ -20,7 +20,7 @@ export const HomeLeft= styled.div`
 
 export const HomeRight= styled.div`
     float : right;//涉及到 左浮动  右浮动  
-    width: 240px;
+    width: 280px;
    
 `;
 
@@ -83,4 +83,64 @@ export const ListInfo= styled.div`
         //font-weight: bold;
         color: #999;
     }
+`;
+
+//7日热门 RecommendItem
+
+export const RecommendItem= styled.div`
+    width: 280px; 
+    height: 50px; 
+    background: url( ${(props)=> props.imgUrl } );// 传递 参数
+    background-size: contain;
+    margin-bottom: 10px;
+`;
+
+export const RecommendWrapper= styled.div`
+    margin: 30px 0; 
+    width: 280px; 
+
+`;
+
+export const WriterWrapper= styled.div` 
+    width: 278px; 
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+
+`;
+
+
+export const LoadMore= styled.div` 
+    width: 100%; 
+    //border: 1px solid #dcdcdc;
+    border-radius: 20px;
+    height: 40px;
+    line-height: 40px;
+    background: #a5a5a5;
+    text-align: center;
+    color: #fff;
+    margin: 30px 0;
+    cursor: pointer;
+`;
+
+//BackTop
+
+export const BackTop= styled.div` 
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+
+    width: 60px; 
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 12px;
+
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    cursor: pointer;
 `;

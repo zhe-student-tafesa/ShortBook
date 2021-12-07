@@ -1,17 +1,18 @@
 //List 组件
-import React, { Component } from 'react';
-import { ListItem, ListInfo }  from '../style.js';
+import React, { PureComponent } from 'react';
+import { ListItem, ListInfo, LoadMore }  from '../style.js';
 
 import   { connect } from 'react-redux';//与 store 连接
+import {actionCreators} from '../store';
 
-class List extends Component{ //没有 ()
+class List extends PureComponent{ //没有 ()
     render(){
         return (
             <div>
             {this.props.list.map(
-                (item)=>{ 
+                (item, index)=>{ 
                     return(
-                        <ListItem key= { item.get('id') }>
+                        <ListItem key= { index }>
                             <img className='list_pic' src= {item.get('imgUrl')}  alt="mask"/>
                             <ListInfo>
                                 <h3 className='title'>{item.get('title')}</h3>
@@ -21,6 +22,7 @@ class List extends Component{ //没有 ()
                     )
                 }
             )}
+            <LoadMore onClick= { ()=> this.props.getMoreList(this.props.page) }>更多</LoadMore>
  
             </div>
         );
@@ -30,8 +32,19 @@ class List extends Component{ //没有 ()
 //mapState指的是从 store 拿数据
 const mapState= (state)=> (//是一个 函数，返回 一个 对象
     {
-        list: state.get('home').get('articleList')
+        list: state.get('home').get('articleList'),
+        page: state.get('home').get('acticlePage')
     }
 );
 
-export default connect(mapState, null)(List);
+const mapDispatch= (dispatch)=> ( 
+    {
+        getMoreList(page){
+            const action= actionCreators.getMoreList(page);
+            dispatch(action);
+
+        }
+    }
+);
+
+export default connect(mapState, mapDispatch)(List);

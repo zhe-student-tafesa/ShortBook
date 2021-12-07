@@ -1,11 +1,11 @@
 //组件Topic.js
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import   { connect } from 'react-redux';//与 store 连接
 //TopicWrapper
 import { TopicWrapper,TopicItem }  from '../style.js';
 
-class Topic extends Component{ //没有 ()
+class Topic extends PureComponent{ //没有 ()
     render(){
         return (
             <TopicWrapper>
