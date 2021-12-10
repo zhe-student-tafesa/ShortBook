@@ -8,7 +8,7 @@ class Writer extends PureComponent{ //没有 ()
     render(){
         return (
             <WriterWrapper>
-                homework
+                Advertisement
             </WriterWrapper>
         );
     }

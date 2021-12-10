@@ -32,6 +32,11 @@ export const changePage = (page)=>({
     type: constants.CHANGE_PAGE,
     page: page
 });
+// logout
+// export const logout = ()=>({
+//     type: constants.LOGOUT,
+//     login: false
+// });
 
 
 
@@ -51,7 +56,7 @@ export const getList = ()=>{
                     }
          )
         .catch(
-            ()=> {console.log('123error');}
+            ()=> {console.log('加载失败， 请刷新 重试');}
          )
 
     };

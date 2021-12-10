@@ -5,6 +5,7 @@ import logoPic from '../../statics/logo.png';
 
 //创建一个组件 HeaderWrapper， 本质上这里是一个div
 export const HeaderWrapper = styled.div`
+    z-index: 1;   //为了 让 搜索 能够 出现 在上 层
     //父组件相对定位，下部a组件是子组件，使用绝对到位
     position:relative;
     height:56px;

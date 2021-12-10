@@ -5,11 +5,13 @@ import  { connect } from 'react-redux';
 //HeaderWrapper，
 
 import { CSSTransition } from 'react-transition-group';
+import   { Link } from 'react-router-dom';// 路由
 
 //导入 所有 内容
 //import  * as actionCreators  from './store/actionCreators';
 import    { actionCreators }  from './store/index.js';
-
+//导入login的actionCreators
+import    { actionCreators as loginActionCreators }  from '../../pages/login/store';
 
 import { HeaderWrapper,
          Logo,
@@ -67,7 +69,7 @@ class Header extends Component{
 
     render(){
         //list
-        const { list } = this.props;
+        const { list, login, logout } = this.props;
         return(
             <HeaderWrapper>
                 <Logo href='/' />
@@ -75,7 +77,9 @@ class Header extends Component{
                     
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right'>登录</NavItem>
+                    {login? <NavItem className='right' onClick={logout}>退出</NavItem>: 
+                            <Link to= '/login'><NavItem className='right'>登录</NavItem></Link> }
+                    
                     <NavItem className='right'>
                         <span className="iconfont">&#xe636;</span>
                     </NavItem>
@@ -96,10 +100,12 @@ class Header extends Component{
                     </SearchWrapper>
                 </Nav>
                 <Addition> 
-                    <Button className='writting'>
-                        <span className="iconfont">&#xe708;</span>
-                        写文章
-                    </Button>
+                    <Link to='/write'>
+                        <Button className='writting'>
+                            <span className="iconfont">&#xe708;</span>
+                            写文章
+                        </Button>
+                    </Link>
                     <Button className='reg'>注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -132,7 +138,8 @@ const mapStateToProps=(state)=>{//由于 拆分 reducer，导致多了一层head
         list : state.get('header').get('list'),
         page : state.get('header').get('page'),//获取 页码
         totalPage : state.get('header').get('totalPage'),//获取 总页码
-        mouseIn : state.get('header').get('mouseIn')
+        mouseIn : state.get('header').get('mouseIn'),
+        login : state.get('login').get('login')//是否登录
     };
 };
 
@@ -158,6 +165,10 @@ const mapDispatchToProps=(dispatch)=>{
         handleMouseEnter(){
            const action= actionCreators.mouseEnter();
            dispatch(action); 
+        },
+        logout(){//点击 退出时 ，需要 用login 的 actionCreators
+            const action= loginActionCreators.logout();
+            dispatch(action); 
         },
         
         handleMouseLeave(){

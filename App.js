@@ -4,7 +4,10 @@ import store  from './store/index.js';// 为了 使用 redux
 import { Provider } from 'react-redux';///Provider 把 store 提供给 他的 子元素
 
 import Home  from './pages/home/index.js';
-import Detail  from './pages/detail/index.js';
+//import Detail  from './pages/detail/index.js';同步
+import Detail  from './pages/detail/loadable.js';//异步 加载
+import Login  from './pages/login/index.js';
+import Write  from './pages/write/index.js';
 
 //import {connect}  from 'react-redux';//使用connect 连接 store与 todolist
 import  { GlobalStyle } from './style.js';   //导入GlobalStyle
@@ -20,12 +23,14 @@ class App extends Component{
           <Provider store = { store }>
             <div>
             <Header/>
-            <BrowserRouter>
+            
               <Routes>
                 <Route path='/'       exact element={<Home />}    /> 
                 <Route path='/detail' exact element={<Detail />}  />  
+                <Route path='/login'  exact element={<Login />}  /> 
+                <Route path='/write'  exact element={<Write />}  />  
               </Routes>
-            </BrowserRouter>
+            
             </div>
           </Provider>
       </div>

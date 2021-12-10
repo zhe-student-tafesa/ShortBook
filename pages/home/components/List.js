@@ -4,6 +4,9 @@ import { ListItem, ListInfo, LoadMore }  from '../style.js';
 
 import   { connect } from 'react-redux';//与 store 连接
 import {actionCreators} from '../store';
+import   { Link } from 'react-router-dom';// 路由
+
+
 
 class List extends PureComponent{ //没有 ()
     render(){
@@ -12,13 +15,15 @@ class List extends PureComponent{ //没有 ()
             {this.props.list.map(
                 (item, index)=>{ 
                     return(
-                        <ListItem key= { index }>
+                        <Link key= { index } to={'./detail?id='+ item.get('id') }>
+                        <ListItem >
                             <img className='list_pic' src= {item.get('imgUrl')}  alt="mask"/>
                             <ListInfo>
                                 <h3 className='title'>{item.get('title')}</h3>
                                 <p className='desc'>{item.get('desc')}</p>
                             </ListInfo>
                         </ListItem>
+                        </Link>
                     )
                 }
             )}
